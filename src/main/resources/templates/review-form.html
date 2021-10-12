@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <head th:replace="fragments/head :: head('Review form')"/>
+</head>
+<body>
+<form th:object="${review}" th:action="@{/review-form/{id}(id=${movieId})}" method="post">
+
+</form>
+</body>
+</html>

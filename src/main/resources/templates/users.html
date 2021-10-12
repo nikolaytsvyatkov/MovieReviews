@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <head th:replace="fragments/head :: head('Users')"/>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<div class="shadow-table">
+    <table>
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Photo</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <form method="post">
+            <tr th:each="row: ${users}">
+                <td th:text="${row.username}"></td>
+                <td th:text="${row.password}"></td>
+                <td th:text="${row.firstName}"></td>
+                <td th:text="${row.lastName}"></td>
+                <td>
+                    <a href="#" data-toggle="modal" data-target="#exampleModal"
+                       th:data-image-url="${'/uploads/' + row.photo}"
+                       th:data-image-title="${row.photo}">
+                        <img class="img-thumbnail" th:if="${row.photo != null}"
+                             th:src="${'/uploads/' + row.photo}">
+                    </a>
+                </td>
+                <td th:text="${row.email}"></td>
+                <td>
+                    <button type="submit" class="btn btn-primary" name="edit" th:value="${row.id}">Edit</button>
+                    <button type="submit" class="btn btn-danger" name="delete" th:value="${row.id}">Remove</button>
+                </td>
+        </form>
+        </tbody>
+    </table>
+</div>
+<div th:replace="fragments/foot :: foot"></div>
+</body>
+</html>

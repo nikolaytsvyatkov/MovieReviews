@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <head th:replace="fragments/head :: head('Movies')"/>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<div class="shadow-table">
+    <table >
+        <thead>
+        <tr>
+            <th>Movie title</th>
+            <th>Description</th>
+            <th>Photo</th>
+            <th>Release date</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <form method="post">
+            <tr th:each="row: ${movies}">
+                <td th:text="${row.movieTitle}"></td>
+                <td th:text="${row.description}"></td>
+                <td>
+                    <a href="#" data-toggle="modal" data-target="#exampleModal"
+                       th:data-image-url="${'/uploads/' + row.moviePhoto}"
+                       th:data-image-title="${row.movieTitle}">
+                        <img class="img-thumbnail" th:if="${row.moviePhoto != null}"
+                             th:src="${'/uploads/' + row.moviePhoto}">
+                    </a>
+                </td>
+                <td th:text="${#temporals.format(row.releaseDate, 'dd-MM-yyyy')}"></td>
+                <td>
+                    <button type="submit" class="btn btn-primary" name="edit" th:value="${row.id}">Edit</button>
+                    <button type="submit" class="btn btn-danger"  name="delete" th:value="${row.id}">Remove</button>
+                    <button type="submit" class="btn btn-primary btn-lg disabled" name="movieId" th:value="${row.id}">Open reviews</button>
+                </td>
+        </form>
+        </tbody>
+    </table>
+</div>
+<div th:replace="fragments/foot :: foot"></div>
+</body>
+</html>

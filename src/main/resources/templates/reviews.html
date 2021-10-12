@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Reviews')"/>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<a th:href="@{/review-form/{id}(id=${movieId})}">Add review</a>
+<div id="wrapper">
+    <table class="review-table">
+        <th:block th:each="review: ${reviews}">
+            <tr>
+                <td>
+                    <th:block th:each="i: ${#numbers.sequence(1, review.rating)}">
+                        <div class="clip-star"></div>
+                    </th:block>
+                </td>
+                <td>
+                    <h2 th:text="${review.reviewTitle}"></h2>
+                </td>
+            </tr>
+            <tr th:colspan="2">
+                <td>
+                    <div ng-app="myApp">
+                        <div ng-controller="AppCtrl">
+                        <textarea th:text="${review.text}"
+                                  id="TextArea"
+                                  ng-model="loremIpsum" ng-keyup="autoExpand($event)"
+                                  placeholder="This is an auto expanding textarea with just angularjs ... try typing something."
+                                  readonly></textarea>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<div th:replace="fragments/foot :: foot"></div>
+</body>
+</html>

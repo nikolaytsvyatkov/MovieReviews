@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <head th:replace="fragments/head :: head(${title})"/>
+</head>
+<body>
+<div>
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2>Movie Form</h2>
+            <form th:object="${movie}" th:action="@{/movie-form}" method="post" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="col-md-6 form-group">
+                        <label>Movie Title</label>
+                        <input type="text" class="form-control" th:field="*{movieTitle}">
+                        <p th:if="${#fields.hasErrors('movieTitle')}" th:errors="*{movieTitle}"
+                           class="errors alert alert-danger offset-sm-2 col-sm-10">
+                            Incorrect title
+                        </p>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label  th:text="${#strings.isEmpty(movie.moviePhoto)}? 'Choose file' : *{moviePhoto}"
+                               class="custom-file-label" for="file">Choose picture file</label>
+                        <input type="file" id="file" name="file" class="custom-file-input" th:value="*{moviePhoto}">
+                        <p th:if="${fileError != null}" class="errors alert alert-danger offset-sm-2 col-sm-10">
+                            <span th:text="${fileError}"></span>
+                        </p>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" th:field="*{description}">
+                        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                           class="errors alert alert-danger offset-sm-2 col-sm-10">
+                            Incorrect description
+                        </p>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Release date</label>
+                        <input type="date" class="form-control" th:value="*{releaseDate}" th:field="*{releaseDate}"/>
+                        <p th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}"
+                           class="errors alert alert-danger offset-sm-2 col-sm-10">
+                            Incorrect release date
+                        </p>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block mt-3">Save</button>
+
+                <input type="hidden" th:value="*{moviePhoto}" id="moviePhoto" name="moviePhoto"
+                       title="Movie picture URL">
+                <input type="hidden" th:value="*{created}" id="created" name="created">
+                <input type="hidden" th:value="*{modified}" id="modified" name="modified">
+                <div th:if="${movie.getId()} != null" class="form-group row">
+                    <div class="col-sm-10">
+                        <input type="text" th:value="*{id}" id="id" name="id"
+                               class="form-control" title="Movie Id" hidden>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/foot::foot"></div>
+</body>
+</html>
